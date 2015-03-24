@@ -1,66 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <?= $this->Html->charset(); ?>
-    <title><?= $this->get('title');?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= $this->Html->charset() ?>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <title>
+        <?= $this->fetch('title') ?>
+    </title>
+    <?= $this->Html->meta('icon') ?>
 
-    <!-- Base CSS -->
-    <?= $this->Html->css('CrudView.bootstrap.min');?>
-    <?= $this->Html->css('CrudView.bootflat.min');?>
-    <?= $this->Html->css('CrudView.local');?>
-
-    <!-- Base JS -->
-    <?= $this->Html->script('CrudView.jquery.min');?>
-    <?= $this->Html->script('CrudView.bootstrap.min');?>
-
-    <!-- Moment.js -->
-    <?= $this->Html->script('CrudView./contrib/momentjs/js/moment-with-langs.min');?>
-
-    <!-- DateTime picker -->
-    <?= $this->Html->css('CrudView./contrib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min');?>
-    <?= $this->Html->script('CrudView./contrib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min');?>
-
-    <!-- jQuery UI -->
-    <?= $this->Html->css('CrudView./contrib/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.min');?>
-    <?= $this->Html->script('CrudView./contrib/jquery-ui/js/jquery-ui-1.10.4.custom.min');?>
-
-    <?= $this->Html->script('CrudView./contrib/icheck/js/icheck.min');?>
-
-    <?= $this->Html->script('CrudView.local');?>
-
-    <?= $this->Html->meta('icon'); ?>
-    <?= $this->fetch('meta'); ?>
-    <?= $this->fetch('css'); ?>
+    <?php
+    echo $this->Html->css([
+        '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css',
+        'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',
+        'http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css',
+        '/adminlte/dist/css/AdminLTE.min.css',
+        '/adminlte/dist/css/skins/skin-black.min.css',
+        '/adminlte/plugins/iCheck/all.css',
+        '/adminlte/plugins/timepicker/bootstrap-timepicker.min.css',
+        '/adminlte/plugins/iCheck/all.css',
+        '/adminlte/plugins/daterangepicker/daterangepicker-bs3.css',
+        '/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
+        '/adminlte/plugins/datatables/dataTables.bootstrap.css',
+        '/adminlte/plugins/daterangepicker/daterangepicker-bs3.css',
+    ]);
+    ?>
+    <!--[if lt IE 9]>
+    <?php
+        echo $this->Html->script([
+    'https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js',
+    'https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js'
+    ]);
+    ?>
+    <![endif]-->
+    <?= $this->fetch('meta') ?>
+    <?= $this->fetch('css') ?>
 </head>
-<body>
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">Crud View v0.1.0</a>
-            </div>
-        </div>
-    </nav>
+<body class="skin-black">
+<div class="wrapper">
+    <?= $this->element('Admin/header'); ?>
+    <?= $this->element('Admin/sidebar'); ?>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <?= $this->get('title'); ?>
+            </h1>
+            <?= $this->element('Admin/breadcrumbs'); ?>
+        </section>
 
-    <div class="bs-docs-header" id="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-0 col-sm-2 col-lg-2">
-                    <?= $this->element('sidebar'); ?>
-                </div>
-                <div class="col-xs-12 col-sm-10 col-lg-10">
-                    <?= $this->Session->flash(); ?>
-                    <?= $this->fetch('content'); ?>
-                </div>
-        </div>
-    </div>
-
-    <?= $this->fetch('script'); ?>
+        <!-- Main content -->
+        <section class="content">
+            <?php echo $this->element('Admin/menu_actions'); ?>
+            <?= $this->fetch('content'); ?>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    <?= $this->element('Admin/footer'); ?>
+</div><!-- ./wrapper -->
+</div>
+<?php
+echo $this->Html->script([
+    '/adminlte/plugins/jQuery/jQuery-2.1.3.min.js',
+    '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js',
+    '/adminlte/plugins/input-mask/jquery.inputmask.js',
+    '/adminlte/plugins/input-mask/jquery.inputmask.date.extensions.js',
+    '/adminlte/plugins/input-mask/jquery.inputmask.extensions.js',
+    '/adminlte/plugins/daterangepicker/daterangepicker.js',
+    '/adminlte/plugins/timepicker/bootstrap-timepicker.min.js',
+    '/adminlte/plugins/slimScroll/jquery.slimscroll.min.js',
+    '/adminlte/plugins/iCheck/icheck.min.js',
+    '/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js',
+    '/adminlte/plugins/fastclick/fastclick.min.js',
+    '/adminlte/plugins/datatables/dataTables.bootstrap.js',
+    '/adminlte/dist/js/app.min.js',
+    '/adminlte/plugins/input-mask/jquery.inputmask.js',
+    '/adminlte/plugins/input-mask/jquery.inputmask.date.extensions.js',
+    '/adminlte/plugins/input-mask/jquery.inputmask.extensions.js',
+    '/adminlte/plugins/daterangepicker/daterangepicker.js',
+    'admin/app.js'
+]);
+echo $this->fetch('script');
+?>
 </body>
 </html>

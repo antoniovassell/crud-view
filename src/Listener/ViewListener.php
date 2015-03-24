@@ -38,6 +38,16 @@ class ViewListener extends BaseListener
     }
 
     /**
+     * beforePaginate
+     *
+     * @param Event $event
+     */
+    public function beforePaginate(Event $event)
+    {
+        $this->_controller()->paginate['contain'] = $this->_getRelatedModels();
+    }
+
+    /**
      * Make sure flash messages uses the views from BoostCake
      *
      * @param \Cake\Event\Event $event Event.
@@ -91,7 +101,6 @@ class ViewListener extends BaseListener
                 $models[$key] = [];
             }
         }
-
         return $models;
     }
 
@@ -118,6 +127,7 @@ class ViewListener extends BaseListener
         $controller->set('fields', $this->_scaffoldFields());
         $controller->set('blacklist', $this->_blacklist());
         $controller->set('actions', $this->_getControllerActions());
+        $controller->set('tableActions', $this->_getTableActions($event));
         $controller->set('associations', $this->_associations());
         $controller->set($this->_getPageVariables());
     }
@@ -243,6 +253,7 @@ class ViewListener extends BaseListener
 
         $action = $this->_action();
         $configuredFields = $action->config('scaffold.fields');
+
         if (!empty($configuredFields)) {
             $configuredFields = Hash::normalize($configuredFields);
             $scaffoldFields = array_intersect_key($configuredFields, $scaffoldFields);
@@ -262,7 +273,6 @@ class ViewListener extends BaseListener
 
             $scaffoldFields[$field] += ['formatter' => null];
         }
-
         return $scaffoldFields;
     }
 
@@ -308,6 +318,23 @@ class ViewListener extends BaseListener
         }
 
         return compact('table', 'entity');
+    }
+
+    /**
+     * Returns table actions
+     *
+     * @return array
+     */
+    protected function _getTableActions(Event $event)
+    {
+        $default = ['view', 'edit', 'delete'];
+        if (!empty($event->subject->entity)) {
+            $this->_entity = $event->subject->entity;
+        }
+        if (isset($this->_entity->tableActions)) {
+            $default = $this->_entity->tableActions;
+        }
+        return $default;
     }
 
     /**

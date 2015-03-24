@@ -1,6 +1,6 @@
 <?php
 foreach ($fields as $field => $options) {
     ?>
-    <td><?= $this->CrudView->process($field, $singularVar, $options); ?></td>
+    <td class="text-nowrap"><?= $this->CrudView->process($field, $singularVar, $options); ?></td>
     <?php
 }

@@ -67,8 +67,8 @@ class CrudViewHelper extends Helper
                 return $this->_View->element($options['element'], compact('field', 'value', 'options'));
 
             case 'relation':
-                return $this->relation($field, $value, $options);
-
+                $output = $this->relation($field, $value, $options);
+                return $output['output'];
             default:
                 return $this->introspect($field, $value, $options);
         }
@@ -137,7 +137,7 @@ class CrudViewHelper extends Helper
      */
     public function formatBoolean($field, $value, array $options)
     {
-        return (bool)$value ? '<span class="label label-success">Yes</span>' : '<span class="label label-danger">No</span>';
+        return (bool)$value ? '<div class="text-center"><span class="label label-success">Yes</span></div>' : '<div class="text-center"><span class="label label-danger">No</span></div>';
     }
 
     /**
@@ -190,16 +190,16 @@ class CrudViewHelper extends Helper
     public function relation($field, $value, array $options = [])
     {
         $associations = $this->associations();
-        if (empty($associations['belongsTo'])) {
+        if (empty($associations['manyToOne'])) {
             return false;
         }
 
         $data = $this->getContext();
-        foreach ($associations['belongsTo'] as $alias => $details) {
+        foreach ($associations['manyToOne'] as $alias => $details) {
             if ($field !== $details['foreignKey']) {
                 continue;
             }
-
+            $alias = Inflector::humanize($alias);
             return [
                 'alias' => $alias,
                 'output' => $this->Html->link($data[$alias][$details['displayField']], [

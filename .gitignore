@@ -1,0 +1,9 @@
+/vendor/*
+/config/app.php
+/tmp/*
+/logs/*
+
+!empty
+/logs/*
+/plugins
+/.idea
